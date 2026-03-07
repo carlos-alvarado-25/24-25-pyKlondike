@@ -259,27 +259,29 @@ public class Klondike {
         descarte.vaciar();
         System.out.println("Cartas del descarte movidas a la baraja.");
     }
-    
-    private Columna pedirColumna() {
-        System.out.print("Elige una columna [1-" + NUM_COLUMNAS + "]: ");
+
+    private int pedirEntrada(String mensaje, int maximo)
+    {
+        System.out.print(mensaje + " [1-" + maximo + "]: ");
         int opcion = scanner.nextInt();
         scanner.nextLine();
-        if (opcion < 1 || opcion > NUM_COLUMNAS) {
-            System.out.println("Número de columna inválido. Selección cancelada.");
-            return null;
+
+        if (opcion < 1 || opcion > maximo) 
+        {
+            System.out.println("Selección inválida. Inténtalo de nuevo.");
         }
-        return columnas[opcion - 1];
+
+        return opcion - 1;
     }
     
+    private Columna pedirColumna() {
+        int indice = pedirEntrada("Elige una columna", NUM_COLUMNAS);
+        return (indice == -1) ? null : columnas[indice];
+    }
+
     private Fundacion pedirFundacion() {
-        System.out.print("Elige un palo [1-" + NUM_FUNDACIONES + "]: ");
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
-        if (opcion < 1 || opcion > NUM_FUNDACIONES) {
-            System.out.println("Número de palo inválido. Selección cancelada.");
-            return null;
-        }
-        return fundaciones[opcion - 1];
+        int indice = pedirEntrada("Elige un palo", NUM_FUNDACIONES);
+        return (indice == -1) ? null : fundaciones[indice];
     }
     
     private void mostrarMenu() {
